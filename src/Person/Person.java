@@ -48,6 +48,11 @@ public abstract class Person  {
 
 
     public String getInfo() {
+        System.out.println("vasnonvav" +
+                "cavav" +
+                "" +
+                "vavsavva" +
+                "vavv");
         return name + " " + surname;
     }
 
