@@ -1,5 +1,5 @@
 package Library;
 
-public interface RuBook {
+public interface RuBook extends Book{
     String getInfo();
 }

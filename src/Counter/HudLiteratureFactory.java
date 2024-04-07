@@ -17,7 +17,7 @@ public class HudLiteratureFactory {
     private static HudLiteratureFactory INSTANCE;
 
     private HudLiteratureFactory() {
-        russianHudList = ReaderCsv.readCsv("data/russian_fiction.csv");
+        russianHudList = ReaderCsv.readCsv("data/russian_hud.csv");
         englishHudList = ReaderCsv.readCsv("data/english_fiction.csv");
     }
 
@@ -29,14 +29,14 @@ public class HudLiteratureFactory {
     }
 
     public RuBook createRuLiterature(){
-
+        new HudRuBook(null, 0, null, null);
         Random r = new Random();
         String[] bookInfo = russianHudList.get(r.nextInt(russianHudList.size()-1));
         return new HudRuBook(bookInfo[0], r.nextInt(3) + 1, bookInfo[1], bookInfo[2]);
     }
 
     public EngBook createEngLiterature() {
-
+new HudEngBook(null,0,null,null);
         Random r = new Random();
         String[] levels = {
                 "A1", "A2", "B1", "B2", "C1", "C2"

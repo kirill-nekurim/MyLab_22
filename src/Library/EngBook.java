@@ -1,5 +1,5 @@
 package Library;
 
-public interface EngBook {
+public interface EngBook extends Book {
       String getInfo();
 }

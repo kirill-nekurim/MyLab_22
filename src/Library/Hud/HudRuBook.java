@@ -8,7 +8,7 @@ public class HudRuBook implements RuBook {
     public String title;
     public String author;
     public HudRuBook (String type, int edition, String title, String author) {
-        this.author = author;
+        this.type = type;
         this.edition = edition;
         this.title = title;
         this.author = author;
