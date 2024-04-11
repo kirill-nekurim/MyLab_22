@@ -2,6 +2,7 @@ package Operations;
 
 import Counter.EducationalLiteratureFactory;
 import Counter.HudLiteratureFactory;
+import Library.Book;
 import Library.EngBook;
 import Library.RuBook;
 import Person.Person;
@@ -11,20 +12,17 @@ import java.util.*;
 public class Creator {
     private static final Random random = new Random();
 
-    private static Set<EngBook> makeSetOfEngBooks() {
-        Set<EngBook> books = new HashSet<>();
-        for (int i = 0; i < 60; i++) {
-            books.add(random.nextBoolean() ? EducationalLiteratureFactory.getInstance().createEngLiterature() :
-                    HudLiteratureFactory.getInstance().createEngLiterature());
-        }
-        return books;
-    }
+    private static final String ENGLISH = "ENGLISH";
+    private static final String RUSSIAN = "RUSSIAN";
 
-    private static Set<RuBook> makeSetOfRuBooks() {
-        Set<RuBook> books = new HashSet<>();
+    private static Set<Book> makeSetOfBooks(String type) {
+        Set<Book> books = new HashSet<>();
         for (int i = 0; i < 60; i++) {
-            books.add(random.nextBoolean() ? HudLiteratureFactory.getInstance().createRuLiterature() :
-                    EducationalLiteratureFactory.getInstance().createRuLiterature());
+            if (type.equals(ENGLISH)) {
+                books.add(EducationalLiteratureFactory.getInstance().createEngLiterature());
+            } else if (type.equals(RUSSIAN)) {
+                books.add(HudLiteratureFactory.getInstance().createRuLiterature());
+            }
         }
         return books;
     }
@@ -49,22 +47,22 @@ public class Creator {
     }
 
     private static void distributeBooks(Person[] customers) {
-        List<EngBook> engBooks = new ArrayList<>(makeSetOfEngBooks());
-        List<RuBook> ruBooks = new ArrayList<>(makeSetOfRuBooks());
+        List<Book> allBooks = new ArrayList<>();
+        allBooks.addAll(makeSetOfBooks(ENGLISH));
+        allBooks.addAll(makeSetOfBooks(RUSSIAN));
+
         for (Person customer : customers) {
             int numberOfBooks = random.nextInt(3, 11);
-            int item;
             for (int j = 0; j < numberOfBooks; j++) {
-                if (random.nextBoolean()) {
-                    do {
-                        item = random.nextInt(engBooks.size());
-                    } while (customer.isEngBookInList(engBooks.get(item)));
-                    customer.englishBooks.add(engBooks.get(item));
+                Book randomBook;
+                do {
+                    randomBook = allBooks.get(random.nextInt(allBooks.size()));
+                } while (customer.isBookInList(randomBook));
+
+                if (randomBook instanceof EngBook) {
+                    customer.englishBooks.add((EngBook) randomBook);
                 } else {
-                    do {
-                        item = random.nextInt(ruBooks.size());
-                    } while (customer.isRuBookInList(ruBooks.get(item)));
-                    customer.russianBooks.add(ruBooks.get(item));
+                    customer.russianBooks.add((RuBook) randomBook);
                 }
             }
         }

@@ -22,7 +22,7 @@ public abstract class Person {
         russianBooks = new ArrayList<>();
     }
 
-    private boolean isBookInList(Book book) {
+    public boolean isBookInList(Book book) {
         if (book instanceof EngBook) {
             for (EngBook englishBook : englishBooks) {
                 if (englishBook.equals(book)) return true;
