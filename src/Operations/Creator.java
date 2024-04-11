@@ -15,29 +15,34 @@ public class Creator {
     private static final String ENGLISH = "ENGLISH";
     private static final String RUSSIAN = "RUSSIAN";
 
-    private static Set<Book> makeSetOfBooks(String type) {
+    private final PersonFactory personFactory;
+
+    public Creator(PersonFactory personFactory) {
+        this.personFactory = personFactory;
+    }
+
+    private static Set<Book> makeSetOfBooks(String type, EducationalLiteratureFactory factory) {
         Set<Book> books = new HashSet<>();
         for (int i = 0; i < 60; i++) {
             if (type.equals(ENGLISH)) {
-                books.add(EducationalLiteratureFactory.getInstance().createEngLiterature());
+                books.add(factory.createEngLiterature());
             } else if (type.equals(RUSSIAN)) {
-                books.add(HudLiteratureFactory.getInstance().createRuLiterature());
+                books.add(factory.createRuLiterature());
             }
         }
         return books;
     }
 
-    private static List<Person> makeListOfCustomers(int numberOfCustomers) {
+    public static List<Person> makeListOfCustomers(int numberOfCustomers, PersonFactory personFactory) {
         List<Person> customers = new ArrayList<>();
         for (int i = 0; i < numberOfCustomers; i++) {
-            customers.add(random.nextBoolean() ? PersonFactory.getInstance().createCustomer("Professor") :
-                    PersonFactory.getInstance().createCustomer("Student"));
+            customers.add(personFactory.createCustomer(random.nextBoolean() ? "Professor" : "Student"));
         }
         return customers;
     }
 
-    public static Person[] generateCustomers(int numberOfCustomers) {
-        List<Person> listOfCustomers = makeListOfCustomers(numberOfCustomers);
+    public static Person[] generateCustomers(int numberOfCustomers, PersonFactory personFactory) {
+        List<Person> listOfCustomers = makeListOfCustomers(numberOfCustomers, personFactory);
         Person[] customers = new Person[numberOfCustomers];
         for (int i = 0; i < numberOfCustomers; i++) {
             customers[i] = listOfCustomers.get(i);
@@ -48,8 +53,8 @@ public class Creator {
 
     private static void distributeBooks(Person[] customers) {
         List<Book> allBooks = new ArrayList<>();
-        allBooks.addAll(makeSetOfBooks(ENGLISH));
-        allBooks.addAll(makeSetOfBooks(RUSSIAN));
+        allBooks.addAll(makeSetOfBooks(ENGLISH, new EducationalLiteratureFactory()));  // Создаем экземпляр EducationalLiteratureFactory для английских книг
+        allBooks.addAll(makeSetOfBooks(RUSSIAN, new HudLiteratureFactory()));  // Создаем экземпляр HudLiteratureFactory для художественной литературы
 
         for (Person customer : customers) {
             int numberOfBooks = random.nextInt(3, 11);

@@ -1,7 +1,11 @@
+import Operations.Creator;
 import Operations.GUI;
+import Person.PersonFactory;
 
 public class Main {
     public static void main(String[] args) {
-        new GUI();
+        PersonFactory personFactory = new PersonFactory();
+        Creator creator = new Creator(personFactory); // Создаем Creator с PersonFactory
+        new GUI(creator); // Передаем Creator в конструктор GUI
     }
-    }
+}

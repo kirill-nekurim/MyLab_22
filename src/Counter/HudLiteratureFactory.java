@@ -11,12 +11,12 @@ import java.util.Random;
 
 
 
-public class HudLiteratureFactory {
+public class HudLiteratureFactory extends EducationalLiteratureFactory {
     private  List<String[]> englishHudList;
     private  List<String[]> russianHudList;
     private static HudLiteratureFactory INSTANCE;
 
-    private HudLiteratureFactory() {
+    public HudLiteratureFactory() {
         russianHudList = ReaderCsv.readCsv("data/russian_hud.csv");
         englishHudList = ReaderCsv.readCsv("data/english_fiction.csv");
     }

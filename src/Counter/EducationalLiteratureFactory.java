@@ -14,7 +14,7 @@ public class EducationalLiteratureFactory implements AbstractFactory{
     List<String[]> ListOfSubject;
     private static EducationalLiteratureFactory INSTANCE;
 
-    private EducationalLiteratureFactory() {
+    public EducationalLiteratureFactory() {
         ListOfSubject = ReaderCsv.readCsv("data/disciplines.csv");
     }
 

@@ -1,18 +1,22 @@
 package Operations;
 
 import Person.Person;
-
+import Person.PersonFactory;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 public class GUI extends JFrame {
-    public GUI() {
+    private final Creator creator;
+
+    public GUI(Creator creator) {
+        this.creator = creator;
+
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
         DefaultMutableTreeNode professorNode = new DefaultMutableTreeNode("Профессоры");
         DefaultMutableTreeNode studentNode = new DefaultMutableTreeNode("Студенты");
 
-        Person[] customers = Creator.generateCustomers(20);
+        Person[] customers = creator.generateCustomers(20, new PersonFactory());  // Используем метод generateCustomers из Creator
         DefaultMutableTreeNode[] customerNodes = new DefaultMutableTreeNode[customers.length];
         for (int i = 0; i < customers.length; i++) {
             customerNodes[i] = customers[i].createNode();

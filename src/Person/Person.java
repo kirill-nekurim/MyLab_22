@@ -15,7 +15,7 @@ public abstract class Person {
     public String surname;
     public List<EngBook> englishBooks;
     public List<RuBook> russianBooks;
-
+    private Map<Book, Object> issuedBooks = new HashMap<>();
 
     public Person(String name, String surname) {
         this.name = name;
@@ -24,7 +24,7 @@ public abstract class Person {
         russianBooks = new ArrayList<>();
     }
 
-    private Map<Book, Object> issuedBooks = new HashMap<>();
+
 
     public boolean isBookInList(Book book) {
         return issuedBooks.containsKey(book);
