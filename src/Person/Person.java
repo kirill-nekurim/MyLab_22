@@ -6,7 +6,9 @@ import Library.RuBook;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Person {
     public String name;
@@ -22,17 +24,10 @@ public abstract class Person {
         russianBooks = new ArrayList<>();
     }
 
+    private Map<Book, Object> issuedBooks = new HashMap<>();
+
     public boolean isBookInList(Book book) {
-        if (book instanceof EngBook) {
-            for (EngBook englishBook : englishBooks) {
-                if (englishBook.equals(book)) return true;
-            }
-        } else if (book instanceof RuBook) {
-            for (RuBook russianBook : russianBooks) {
-                if (russianBook.equals(book)) return true;
-            }
-        }
-        return false;
+        return issuedBooks.containsKey(book);
     }
 
     public boolean isEngBookInList(EngBook book) {

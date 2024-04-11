@@ -54,15 +54,13 @@ public class Creator {
         for (Person customer : customers) {
             int numberOfBooks = random.nextInt(3, 11);
             for (int j = 0; j < numberOfBooks; j++) {
-                Book randomBook;
-                do {
-                    randomBook = allBooks.get(random.nextInt(allBooks.size()));
-                } while (customer.isBookInList(randomBook));
-
-                if (randomBook instanceof EngBook) {
-                    customer.englishBooks.add((EngBook) randomBook);
-                } else {
-                    customer.russianBooks.add((RuBook) randomBook);
+                Book randomBook = allBooks.get(random.nextInt(allBooks.size()));
+                if (!customer.isBookInList(randomBook)) {
+                    try {
+                        customer.englishBooks.add((EngBook) randomBook);
+                    } catch (ClassCastException e) {
+                        customer.russianBooks.add((RuBook) randomBook);
+                    }
                 }
             }
         }
